@@ -1,5 +1,3 @@
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,26 +29,32 @@
       font-size: 1.2em;
     }
 
-    .heart {
+    .hearts-container {
       position: fixed;
-      color: #c2185b;
-      animation: fall linear infinite;
-      opacity: 0.3;
-      font-size: 20px;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
       z-index: -1;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      color: #c2185b;
+      animation: fall linear forwards;
+      opacity: 0.3;
+      font-size: 20px;
+      will-change: transform;
     }
 
     @keyframes fall {
       0% { 
-        top: -10%; 
-        left: calc(var(--random-x) * 100vw);
-        transform: translateX(0); 
+        transform: translateY(-10%) translateX(0); 
       }
       100% { 
-        top: 110%; 
-        left: calc(var(--random-x) * 100vw);
-        transform: translateX(calc(var(--random-offset) * 100px)); 
+        transform: translateY(110vh) translateX(calc(var(--random-offset) * 100px)); 
       }
     }
 
@@ -78,6 +82,8 @@
   </style>
 </head>
 <body>
+  <div class="hearts-container" id="heartsContainer"></div>
+  
   <h1>Feliz día de la novia mi bebita tiquita pechocha 🥺💕</h1>
   <p>Hecho con amor por Uriel💕</p>
 
@@ -87,13 +93,10 @@
     Sé que no es mucho pero espero te guste, porque ayer me tarde musho haciéndole este detallito 😴💕<br><br>
     Espero que hoy te la pases bien.  
     Aquí te dejo un pequeño poema que hice con amor  
-    
+    Para mi novia Thaily 💕
   </div>
 
   <div class="poem">
-    Para mi novia Thaily 💕
-
-    
 En el jardín de mi alma florece tu nombre,  
 Thaily, mi cielo, mi calma, mi asombro.  
 Desde que llegaste, todo es poesía,  
@@ -121,24 +124,43 @@ mi bebita tiquita, mi eterna rosa.
   </div>
 
   <script>
-    const numberOfHearts = 100; // Aumentamos la cantidad de corazones
+    const container = document.getElementById('heartsContainer');
+    const heartCount = 30; // Reducimos la cantidad para mejor rendimiento
     
-    for (let i = 0; i < numberOfHearts; i++) {
+    function createHeart() {
       const heart = document.createElement("div");
-      heart.classList.add("heart");
+      heart.className = "heart";
       
-      // Configuramos posiciones aleatorias más distribuidas
-      heart.style.setProperty('--random-x', Math.random());
-      heart.style.setProperty('--random-offset', (Math.random() - 0.5) * 2); // Entre -1 y 1
+      // Posición inicial aleatoria
+      const startX = Math.random() * 100;
+      const offset = (Math.random() - 0.5) * 2; // Entre -1 y 1
       
-      heart.style.animationDuration = (3 + Math.random() * 7) + "s"; // Más variación en velocidad
-      heart.style.animationDelay = (Math.random() * 5) + "s";
-      heart.style.fontSize = (10 + Math.random() * 25) + "px";
-      heart.style.opacity = (0.1 + Math.random() * 0.4);
-      heart.innerText = "❤️";
+      heart.style.left = `${startX}%`;
+      heart.style.setProperty('--random-offset', offset);
+      heart.style.animationDuration = `${3 + Math.random() * 4}s`;
+      heart.style.fontSize = `${10 + Math.random() * 20}px`;
+      heart.style.opacity = 0.2 + Math.random() * 0.3;
+      heart.innerHTML = "❤️";
       
-      document.body.appendChild(heart);
+      container.appendChild(heart);
+      
+      // Eliminar el corazón después de que complete su animación
+      setTimeout(() => {
+        heart.remove();
+      }, 7000); // Un poco más que la duración máxima de animación
     }
+    
+    // Crear corazones iniciales
+    for (let i = 0; i < heartCount; i++) {
+      setTimeout(createHeart, Math.random() * 3000);
+    }
+    
+    // Crear nuevos corazones periódicamente
+    setInterval(() => {
+      if (document.querySelectorAll('.heart').length < heartCount) {
+        createHeart();
+      }
+    }, 800);
   </script>
 </body>
 </html>
