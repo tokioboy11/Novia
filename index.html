@@ -10,9 +10,7 @@
       padding: 0;
       background-color: #ffd7ec;
       font-family: 'Comic Sans MS', cursive;
-      overflow: hidden;
-      position: relative;
-      height: 100vh;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -38,20 +36,105 @@
     }
 
     @keyframes fall {
-      0% {
-        top: -10%;
-        transform: translateX(0);
-      }
-      100% {
-        top: 110%;
-        transform: translateX(50px);
-      }
+      0% { top: -10%; transform: translateX(0); }
+      100% { top: 110%; transform: translateX(50px); }
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2em;
+      margin-top: 20px;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    .hidden {
+      display: none;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .visible {
+      display: block;
+      opacity: 1;
+    }
+
+    .content {
+      text-align: center;
+      padding: 30px;
+      color: #880e4f;
+      font-size: 1.2em;
+    }
+
+    .poem {
+      white-space: pre-wrap;
+      text-align: center;
+      color: #6a1b9a;
+      font-size: 1.1em;
+      margin-top: 20px;
+    }
+
+    img {
+      max-width: 80%;
+      margin-top: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
   </style>
 </head>
 <body>
   <h1>Feliz día de la novia mi bebita tiquita pechocha 🥺💕</h1>
   <p>Hecho con amor por Uriel💕</p>
+  <div class="arrow" onclick="showContent1()">⬇️</div>
+
+  <div id="content1" class="hidden">
+    <div class="content">
+      Hola mi bebita como tash<br><br>
+      Espero que bien, este detallito te lo doy porque hoy es día de la novia y te quise dar un regalito.  
+      Sé que no es mucho pero espero te guste, porque ayer me tarde musho haciéndole este detallito 😴💕<br><br>
+      Espero que hoy te la pases bien.  
+      Aquí te dejo un pequeño poema que hice con amor  
+      
+    </div>
+
+    <div class="poem">
+      Para mi novia Thaily 💕
+      
+En el jardín de mi alma florece tu nombre,  
+Thaily, mi cielo, mi calma, mi asombro.  
+Desde que llegaste, todo es poesía,  
+mi risa, mis sueños, mi melancolía.  
+
+Tu voz es abrigo, tu abrazo mi hogar,  
+tu mirada una estrella que me guía al amar.  
+Eres más que un día, más que una flor,  
+eres mi vida, mi fuerza, mi amor.  
+
+No hay reloj que mida lo que por ti siento,  
+porque cada segundo contigo es un monumento.  
+A tu ternura, tu risa, tu forma de ser,  
+Thaily, contigo solo quiero renacer.  
+
+Gracias por amarme como solo tú sabes,  
+por hacer que mis días jamás sean graves.  
+Feliz Día de la Novia, mi niña preciosa,  
+mi bebita tiquita, mi eterna rosa.
+    </div>
+
+    <div class="arrow" onclick="showContent2()">⬇️</div>
+  </div>
+
+  <div id="content2" class="hidden">
+    <div style="text-align:center;">
+      <img src="https://i.imgur.com/nXbk1yd.jpeg" alt="Gatito con flores">
+      <div class="content">El gatito soy yo regalándote unas flores 🥺</div>
+    </div>
+  </div>
 
   <script>
     const numberOfHearts = 40;
@@ -64,6 +147,14 @@
       heart.innerText = "❤️";
       document.body.appendChild(heart);
     }
+
+    function showContent1() {
+      document.getElementById('content1').classList.add('visible');
+    }
+
+    function showContent2() {
+      document.getElementById('content2').classList.add('visible');
+    }
   </script>
 </body>
-</html>
+      </html>
