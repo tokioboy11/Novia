@@ -1,3 +1,5 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,24 +9,24 @@
   <style>
     body {
       margin: 0;
-      padding: 20px 0;
+      padding: 0;
       background-color: #ffd7ec;
       font-family: 'Comic Sans MS', cursive;
       overflow-x: hidden;
       min-height: 100vh;
-      position: relative;
     }
 
     h1 {
       color: #c2185b;
       text-align: center;
       font-size: 2.5em;
-      margin-top: 10vh;
+      margin: 0;
+      padding: 20px 0 10px 0;
     }
 
     p {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
       color: #ad1457;
       font-size: 1.2em;
     }
@@ -33,7 +35,7 @@
       position: fixed;
       color: #c2185b;
       animation: fall linear infinite;
-      opacity: 0.5;
+      opacity: 0.3;
       font-size: 20px;
       pointer-events: none;
       z-index: -1;
@@ -42,17 +44,19 @@
     @keyframes fall {
       0% { 
         top: -10%; 
-        transform: translateX(calc(100vw * var(--random-x))); 
+        left: calc(var(--random-x) * 100vw);
+        transform: translateX(0); 
       }
       100% { 
         top: 110%; 
-        transform: translateX(calc(100vw * var(--random-x) + 100px)); 
+        left: calc(var(--random-x) * 100vw);
+        transform: translateX(calc(var(--random-offset) * 100px)); 
       }
     }
 
     .content {
       text-align: center;
-      padding: 30px;
+      padding: 20px;
       color: #880e4f;
       font-size: 1.2em;
     }
@@ -62,7 +66,7 @@
       text-align: center;
       color: #6a1b9a;
       font-size: 1.1em;
-      margin-top: 20px;
+      margin: 20px 0;
     }
 
     img {
@@ -83,10 +87,13 @@
     Sé que no es mucho pero espero te guste, porque ayer me tarde musho haciéndole este detallito 😴💕<br><br>
     Espero que hoy te la pases bien.  
     Aquí te dejo un pequeño poema que hice con amor  
-    Para mi novia Thaily 💕
+    
   </div>
 
   <div class="poem">
+    Para mi novia Thaily 💕
+
+    
 En el jardín de mi alma florece tu nombre,  
 Thaily, mi cielo, mi calma, mi asombro.  
 Desde que llegaste, todo es poesía,  
@@ -114,17 +121,22 @@ mi bebita tiquita, mi eterna rosa.
   </div>
 
   <script>
-    const numberOfHearts = 40;
+    const numberOfHearts = 100; // Aumentamos la cantidad de corazones
+    
     for (let i = 0; i < numberOfHearts; i++) {
       const heart = document.createElement("div");
       heart.classList.add("heart");
+      
+      // Configuramos posiciones aleatorias más distribuidas
       heart.style.setProperty('--random-x', Math.random());
-      heart.style.left = (Math.random() * 100) + "vw";
-      heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+      heart.style.setProperty('--random-offset', (Math.random() - 0.5) * 2); // Entre -1 y 1
+      
+      heart.style.animationDuration = (3 + Math.random() * 7) + "s"; // Más variación en velocidad
       heart.style.animationDelay = (Math.random() * 5) + "s";
-      heart.style.fontSize = (12 + Math.random() * 20) + "px";
-      heart.style.opacity = (0.2 + Math.random() * 0.3);
+      heart.style.fontSize = (10 + Math.random() * 25) + "px";
+      heart.style.opacity = (0.1 + Math.random() * 0.4);
       heart.innerText = "❤️";
+      
       document.body.appendChild(heart);
     }
   </script>
