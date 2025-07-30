@@ -7,17 +7,19 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
+      padding: 20px 0;
       background-color: #ffd7ec;
       font-family: 'Comic Sans MS', cursive;
       overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
     }
 
     h1 {
       color: #c2185b;
       text-align: center;
       font-size: 2.5em;
-      margin-top: 35vh;
+      margin-top: 10vh;
     }
 
     p {
@@ -28,16 +30,24 @@
     }
 
     .heart {
-      position: absolute;
+      position: fixed;
       color: #c2185b;
       animation: fall linear infinite;
-      opacity: 0.8;
+      opacity: 0.5;
       font-size: 20px;
+      pointer-events: none;
+      z-index: -1;
     }
 
     @keyframes fall {
-      0% { top: -10%; transform: translateX(0); }
-      100% { top: 110%; transform: translateX(50px); }
+      0% { 
+        top: -10%; 
+        transform: translateX(calc(100vw * var(--random-x))); 
+      }
+      100% { 
+        top: 110%; 
+        transform: translateX(calc(100vw * var(--random-x) + 100px)); 
+      }
     }
 
     .content {
@@ -108,9 +118,12 @@ mi bebita tiquita, mi eterna rosa.
     for (let i = 0; i < numberOfHearts; i++) {
       const heart = document.createElement("div");
       heart.classList.add("heart");
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
-      heart.style.fontSize = 12 + Math.random() * 20 + "px";
+      heart.style.setProperty('--random-x', Math.random());
+      heart.style.left = (Math.random() * 100) + "vw";
+      heart.style.animationDuration = (2 + Math.random() * 3) + "s";
+      heart.style.animationDelay = (Math.random() * 5) + "s";
+      heart.style.fontSize = (12 + Math.random() * 20) + "px";
+      heart.style.opacity = (0.2 + Math.random() * 0.3);
       heart.innerText = "❤️";
       document.body.appendChild(heart);
     }
