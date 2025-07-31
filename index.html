@@ -79,11 +79,44 @@
       border-radius: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
+
+    .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .music-control i {
+      font-size: 24px;
+      color: #c2185b;
+    }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <div class="hearts-container" id="heartsContainer"></div>
   
+  <!-- Reproductor de música invisible -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <!-- Este es un ejemplo de música instrumental, puedes reemplazarlo con tu canción favorita -->
+  </audio>
+
+  <!-- Control de música -->
+  <div class="music-control" id="musicControl">
+    <i class="fas fa-music"></i>
+  </div>
+
   <h1>Feliz día de la novia mi bebita tiquita pechocha 🥺💕</h1>
   <p>Hecho con amor por Uriel💕</p>
 
@@ -93,12 +126,10 @@
     Sé que no es mucho pero espero te guste, porque ayer me tarde musho haciéndole este detallito 😴💕<br><br>
     Espero que hoy te la pases bien.  
     Aquí te dejo un pequeño poema que hice con amor  
-    
+    Para mi novia Thaily 💕
   </div>
 
   <div class="poem">
-    Para mi novia Thaily 💕
-    
 En el jardín de mi alma florece tu nombre,  
 Thaily, mi cielo, mi calma, mi asombro.  
 Desde que llegaste, todo es poesía,  
@@ -126,16 +157,16 @@ mi bebita tiquita, mi eterna rosa.
   </div>
 
   <script>
+    // Animación de corazones
     const container = document.getElementById('heartsContainer');
-    const heartCount = 30; // Reducimos la cantidad para mejor rendimiento
+    const heartCount = 30;
     
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
       
-      // Posición inicial aleatoria
       const startX = Math.random() * 100;
-      const offset = (Math.random() - 0.5) * 2; // Entre -1 y 1
+      const offset = (Math.random() - 0.5) * 2;
       
       heart.style.left = `${startX}%`;
       heart.style.setProperty('--random-offset', offset);
@@ -146,23 +177,52 @@ mi bebita tiquita, mi eterna rosa.
       
       container.appendChild(heart);
       
-      // Eliminar el corazón después de que complete su animación
       setTimeout(() => {
         heart.remove();
-      }, 7000); // Un poco más que la duración máxima de animación
+      }, 7000);
     }
     
-    // Crear corazones iniciales
     for (let i = 0; i < heartCount; i++) {
       setTimeout(createHeart, Math.random() * 3000);
     }
     
-    // Crear nuevos corazones periódicamente
     setInterval(() => {
       if (document.querySelectorAll('.heart').length < heartCount) {
         createHeart();
       }
     }, 800);
+
+    // Control de música
+    const bgMusic = document.getElementById('bgMusic');
+    const musicControl = document.getElementById('musicControl');
+    let isPlaying = false;
+
+    // Intentar iniciar la música automáticamente (puede no funcionar en algunos navegadores)
+    document.addEventListener('click', function() {
+      if (!isPlaying) {
+        bgMusic.play();
+        isPlaying = true;
+        musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+      }
+    }, { once: true });
+
+    // Control manual
+    musicControl.addEventListener('click', function() {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicControl.innerHTML = '<i class="fas fa-music"></i>';
+      } else {
+        bgMusic.play();
+        musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // Cambiar el icono cuando la música termina
+    bgMusic.addEventListener('ended', function() {
+      musicControl.innerHTML = '<i class="fas fa-music"></i>';
+      isPlaying = false;
+    });
   </script>
 </body>
 </html>
